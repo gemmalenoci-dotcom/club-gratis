@@ -51,6 +51,8 @@ mark.blu::before{background:var(--blu)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:inherit;font-weight:800;font-size:17px;line-height:1.1;text-decoration:none;border:0;border-radius:100px;padding:18px 34px;cursor:pointer;transition:transform .2s,box-shadow .2s;text-align:center;background:var(--fucsia);color:#fff;box-shadow:4px 5px 0 rgba(34,124,192,.38)}
 .btn:hover{transform:translate(-1px,-2px);box-shadow:5px 7px 0 rgba(34,124,192,.38)}
 .btn:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--blu);outline-offset:3px}
+.btn-linea{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+.btn-linea:hover{box-shadow:inset 0 0 0 2px var(--ink)}
 .btn .ar{font-size:20px;line-height:1;transition:transform .2s}
 .btn:hover .ar{transform:translateX(3px)}
 
@@ -130,6 +132,15 @@ footer p+p{margin-top:12px;font-size:13.5px}
 footer a{color:var(--ink);font-weight:700;text-decoration:none;border-bottom:2px solid rgba(205,36,113,.35)}
 footer a:hover{border-bottom-color:var(--fucsia)}
 footer .legal a{font-weight:600;color:var(--gray);border-bottom:0;text-decoration:underline;text-underline-offset:3px}
+footer .legal button{font:inherit;font-weight:600;color:var(--gray);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+/* banner cookie: il pixel di Meta parte solo dopo Accetta */
+.ckb{position:fixed;left:16px;bottom:16px;z-index:1200;max-width:520px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 18px 16px;box-shadow:0 24px 50px -24px rgba(59,54,56,.55)}
+.ckb[hidden]{display:none}
+.ckb p{font-size:13.5px;color:var(--body);line-height:1.5;margin-bottom:12px}
+.ckb a{color:var(--fucsia);text-decoration:underline}
+.ckb .ckbtn{display:flex;gap:10px;justify-content:flex-end}
+.ckb .btn{padding:10px 20px;font-size:14px;width:auto}
 
 @media(max-width:900px){
   .hero .wrap{grid-template-columns:1fr}
@@ -140,6 +151,9 @@ footer .legal a{font-weight:600;color:var(--gray);border-bottom:0;text-decoratio
   .hd{height:64px}.hd img{height:33px}
   .hd a.acc span{display:none}
   .btn{width:100%}
+  .ckb{left:10px;right:10px;bottom:10px;padding:12px 12px 12px 14px;display:flex;gap:12px;align-items:center;max-width:none}
+  .ckb p{font-size:12.5px;margin:0;flex:1;line-height:1.4}
+  .ckb .btn{padding:9px 16px;font-size:13.5px}
   .hero .wrap{padding-top:30px}
   .visual{padding-right:8px}
   .polaroid{width:92px;right:-2px}
@@ -174,7 +188,7 @@ footer .legal a{font-weight:600;color:var(--gray);border-bottom:0;text-decoratio
       <h1>Entra <mark>gratis</mark> nel Club e inizia a farti <mark class="blu">scegliere</mark> sui social</h1>
       <p class="sub">Un videocorso per partire, una community che ti risponde e risorse pratiche da usare subito. <b>Gratis per sempre, senza carta di credito</b></p>
       <div class="cta">
-        <a class="btn" href="https://club.unlikeacademy.it/join?invitation_token=b94b0d798e810b7fc25cdebff1b6391b736c9695-b1a1af7e-bfdd-46a8-91f0-ff61dab76617">Crea il tuo account gratis <span class="ar">&rarr;</span></a>
+        <a class="btn" data-ev="ClubGratisClick" href="https://club.unlikeacademy.it/join?invitation_token=b94b0d798e810b7fc25cdebff1b6391b736c9695-b1a1af7e-bfdd-46a8-91f0-ff61dab76617">Crea il tuo account gratis <span class="ar">&rarr;</span></a>
         <p class="micro">Servono solo <b>nome, email e una password</b> · meno di un minuto</p>
         <p class="proof"><i></i>Più di 1.200 persone sono già entrate</p>
       </div>
@@ -253,7 +267,7 @@ footer .legal a{font-weight:600;color:var(--gray);border-bottom:0;text-decoratio
 <section class="final">
   <div class="wrap">
     <h2>Il posto giusto per iniziare<br>si apre con <em>un click</em></h2>
-    <a class="btn" href="https://club.unlikeacademy.it/join?invitation_token=b94b0d798e810b7fc25cdebff1b6391b736c9695-b1a1af7e-bfdd-46a8-91f0-ff61dab76617">Registrati ed entra gratis <span class="ar">&rarr;</span></a>
+    <a class="btn" data-ev="ClubGratisClick" href="https://club.unlikeacademy.it/join?invitation_token=b94b0d798e810b7fc25cdebff1b6391b736c9695-b1a1af7e-bfdd-46a8-91f0-ff61dab76617">Registrati ed entra gratis <span class="ar">&rarr;</span></a>
     <p class="micro">Gratis per sempre · <b>nessuna carta richiesta</b></p>
   </div>
 </section>
@@ -262,9 +276,34 @@ footer .legal a{font-weight:600;color:var(--gray);border-bottom:0;text-decoratio
 <footer>
   <div class="wrap">
     <p>Vuoi vedere anche i piani a pagamento? <a href="https://unlikeacademy.it/" style="white-space:nowrap">Scopri tutto il Club</a></p>
-    <p class="legal"><a href="https://unlikeacademy.it/Termini-e-Condizioni/">Termini e condizioni</a> · <a href="https://www.iubenda.com/privacy-policy/15204920">Privacy policy</a></p>
+    <p class="legal"><a href="https://unlikeacademy.it/Termini-e-Condizioni/">Termini e condizioni</a> · <a href="https://www.iubenda.com/privacy-policy/15204920">Privacy policy</a> · <a href="https://www.iubenda.com/privacy-policy/15204920/cookie-policy">Cookie policy</a> · <button type="button" id="ckOpen">Preferenze cookie</button></p>
   </div>
 </footer>
+
+
+<div class="ckb" id="ckb" role="dialog" aria-label="Preferenze cookie" hidden>
+  <p>Usiamo i cookie di Meta per capire quali annunci ti hanno portata qui. Li attiviamo solo se accetti · <a href="https://www.iubenda.com/privacy-policy/15204920/cookie-policy" target="_blank" rel="noopener">Cookie policy</a></p>
+  <div class="ckbtn"><button class="btn btn-linea" id="ckNo" type="button">Rifiuta</button><button class="btn" id="ckSi" type="button">Accetta</button></div>
+</div>
+
+<script>
+(function(){
+  var PIXEL_ID='558379620509892';
+  var ckb=document.getElementById('ckb');
+  function loadPixel(){
+    if(window.fbq||!PIXEL_ID)return;
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init',PIXEL_ID);fbq('track','PageView');
+  }
+  var scelta=null;try{scelta=localStorage.getItem('ul_cookie')}catch(e){}
+  if(scelta==='si')loadPixel();else if(scelta!=='no'){if(!/[?\x26]og\b/.test(location.search))ckb.hidden=false;}
+  function salva(v){try{localStorage.setItem('ul_cookie',v)}catch(e){}ckb.hidden=true;if(v==='si')loadPixel();}
+  document.getElementById('ckSi').addEventListener('click',function(){salva('si')});
+  document.getElementById('ckNo').addEventListener('click',function(){salva('no')});
+  document.getElementById('ckOpen').addEventListener('click',function(){ckb.hidden=false});
+  document.querySelectorAll('[data-ev]').forEach(function(a){a.addEventListener('click',function(){try{if(window.fbq)fbq('trackCustom',a.getAttribute('data-ev'),{fonte:'entra'})}catch(e){}})});
+})();
+</script>
 
 </body>
 </html>
